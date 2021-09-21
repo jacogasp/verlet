@@ -16,13 +16,19 @@ public:
 private:
     sf::Vector2f m_oldPos;
     sf::Vector2f m_velocity;
-    sf::Clock m_clock {};
+    sf::Clock m_clock{};
 
 public:
     Particle() {
-       setRadius(Particle::radius);
-       setFillColor(sf::Color::White);
+        init();
     }
+
+    explicit Particle(const sf::Vector2f &position) {
+        setPosition(position);
+        init();
+    }
+
+    void init();
 
     ~Particle() override {
         std::cout << "Destroy!\n";

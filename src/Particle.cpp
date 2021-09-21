@@ -4,6 +4,11 @@
 
 #include "Verlet/Particle.h"
 
+void Particle::init() {
+    setRadius(Particle::radius);
+    setFillColor(sf::Color::White);
+}
+
 // ---- SETTERS ----
 void Particle::setInitialVelocity(const sf::Vector2f &v) {
     m_oldPos = getPosition() + v;
@@ -34,7 +39,7 @@ void Particle::bounce(const sf::Window &w) {
         pos.x = size.x - Particle::radius * 2.0f;
         m_oldPos.x = (pos.x + m_velocity.x) * Physics::bounce;
         setPosition(pos);
-    } else if (pos.x <  Particle::radius * 2.0f) {
+    } else if (pos.x < Particle::radius * 2.0f) {
         pos.x = Particle::radius * 2.0f;
         m_oldPos.x = (pos.x + m_velocity.x) * Physics::bounce;
         setPosition(pos);

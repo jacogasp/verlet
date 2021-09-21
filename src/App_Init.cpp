@@ -20,22 +20,25 @@ void App::initParticles(bool bRandomVelocity) {
     offset.x = (getWidth() - Resolution::PADDING) / static_cast<float>(nCols);
     offset.y = (getHeight() - Resolution::PADDING) / static_cast<float>(nRows);
 
-    m_particles.resize(Simulation::NUM_OF_PARTICLES);
-
-    for (int i = 0; i < Simulation::NUM_OF_PARTICLES; ++i) {
-
+    auto particleGenerator = [&]() {
+        static int i = 0;
         auto x = static_cast<float>(i % nCols) * offset.x + Resolution::PADDING;
         auto y = static_cast<float>(i / nRows) * offset.y + Resolution::PADDING;
 
-        m_particles.at(i).setPosition(x, y);
+        Particle p(sf::Vector2f {x, y});
 
-        sf::Vector2f velocity = bRandomVelocity ? sf::Vector2f{
+        sf::Vector2f velocity = bRandomVelocity ? sf::Vector2f {
                 distribution(generator) * Physics::maxInitialVelocity,
                 distribution(generator) * Physics::maxInitialVelocity
         } : sf::Vector2f();
 
-        m_particles.at(i).setInitialVelocity(velocity);
-    }
+        p.setInitialVelocity(velocity);
+        ++i;
+        return p;
+    };
+
+    m_particles.resize(Simulation::NUM_OF_PARTICLES);
+    std::generate_n(m_particles.begin(), Simulation::NUM_OF_PARTICLES, particleGenerator);
 
     offset.x = Particle::radius;
     offset.y = Particle::radius;

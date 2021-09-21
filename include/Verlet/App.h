@@ -6,6 +6,7 @@
 #define VERLET_APP_H
 
 #include <SFML/Graphics.hpp>
+#include <algorithm>
 #include <vector>
 #include <random>
 #include <cmath>
