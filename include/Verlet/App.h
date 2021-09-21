@@ -11,6 +11,7 @@
 #include <cmath>
 
 #include "Particle.h"
+#include "Stick.h"
 
 class App {
 
@@ -19,6 +20,7 @@ private:
     sf::RenderWindow m_window;
 
     std::vector<Particle> m_particles;
+    std::vector<Stick> m_sticks;
 
 public:
 

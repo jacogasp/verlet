@@ -9,6 +9,8 @@ void App::onRender() {
 
     for (auto &p : m_particles)
         m_window.draw(p);
+    for (auto &s : m_sticks)
+        m_window.draw(s);
 
     m_window.display();
 }
