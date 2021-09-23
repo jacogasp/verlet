@@ -23,10 +23,11 @@ sf::Time Particle::getElapsedTime() {
 // ---- LOOP METHODS ----
 
 void Particle::loop() {
-
     m_velocity = getPosition() - m_oldPos;
     m_oldPos = sf::Vector2f{ getPosition() };
+
     m_velocity.y += Physics::gravity;
+
     move(m_velocity);
 }
 
@@ -54,6 +55,14 @@ void Particle::bounce(const sf::Window &w) {
         m_oldPos.y = (pos.y + m_velocity.y) * Physics::bounce;
         setPosition(pos);
     }
+}
+
+void Particle::setConstraint() {
+    m_isConstraint = true;
+}
+
+bool Particle::isConstraint() const {
+    return m_isConstraint;
 }
 
 

@@ -15,46 +15,42 @@ void App::initParticles(bool bRandomVelocity) {
     int nRows = static_cast<int>(sqrt(Simulation::NUM_OF_PARTICLES));
     int nCols = nRows;
 
-    sf::Vector2f offset;
+    m_particles.resize(Simulation::NUM_OF_PARTICLES);
+    auto offsetX = 0.5f * (getWidth() - Resolution::GRID_SPACING * nCols -  2.0f * Resolution::PADDING);
+    auto offsetY = 0.5f * (getHeight() - Resolution::GRID_SPACING * nRows -  2.0f * Resolution::PADDING);
 
-    offset.x = (getWidth() - Resolution::PADDING) / static_cast<float>(nCols);
-    offset.y = (getHeight() - Resolution::PADDING) / static_cast<float>(nRows);
-
-    auto particleGenerator = [&]() {
+    for (auto &p : m_particles) {
         static int i = 0;
-        auto x = static_cast<float>(i % nCols) * offset.x + Resolution::PADDING;
-        auto y = static_cast<float>(i / nRows) * offset.y + Resolution::PADDING;
+        auto x = (i % nCols) * Resolution::GRID_SPACING + offsetX;
+        auto y = (i++ / nRows) * Resolution::GRID_SPACING + offsetY;
 
-        Particle p(sf::Vector2f {x, y});
+        p.setPosition(x, y);
 
-        sf::Vector2f velocity = bRandomVelocity ? sf::Vector2f {
+        sf::Vector2f velocity = bRandomVelocity ? sf::Vector2f{
                 distribution(generator) * Physics::maxInitialVelocity,
                 distribution(generator) * Physics::maxInitialVelocity
         } : sf::Vector2f();
 
         p.setInitialVelocity(velocity);
-        ++i;
-        return p;
-    };
+    }
 
-    m_particles.resize(Simulation::NUM_OF_PARTICLES);
-    std::generate_n(m_particles.begin(), Simulation::NUM_OF_PARTICLES, particleGenerator);
+    // Set constraints
+    m_particles[0].setConstraint();
+    m_particles[nCols - 1].setConstraint();
 
-    offset.x = Particle::radius;
-    offset.y = Particle::radius;
-
+    // Create sticks
     for (int r = 0; r < nRows; r++) {
         for (int c = 0; c < nCols; c++) {
             // Horizontal
             if (c < nCols - 1)
-                m_sticks.emplace_back(m_particles[c + nCols * r].getPosition() + offset,
-                                      m_particles[c + nCols * r + 1].getPosition() + offset);
+                m_sticks.emplace_back(m_particles[c + nCols * r],m_particles[c + nCols * r + 1]);
             // Vertical
             if (r < nRows - 1)
-                m_sticks.emplace_back(m_particles[c + nCols * r].getPosition() + offset,
-                                      m_particles[c + nCols * r + nRows].getPosition() + offset);
+                m_sticks.emplace_back(m_particles[c + nCols * r],m_particles[c + nCols * r + nRows]);
         }
     }
+
+
 }
 
 

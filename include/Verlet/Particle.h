@@ -17,6 +17,7 @@ private:
     sf::Vector2f m_oldPos;
     sf::Vector2f m_velocity;
     sf::Clock m_clock{};
+    bool m_isConstraint{};
 
 public:
     Particle() {
@@ -41,6 +42,10 @@ public:
     void loop();
 
     void bounce(const sf::Window &w);
+
+    void setConstraint();
+
+    bool isConstraint() const;
 
 };
 

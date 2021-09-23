@@ -12,7 +12,7 @@ int App::onExecute() {
             onEvent();
         }
 
-//        onLoop();
+        onLoop();
         onRender();
     }
 

@@ -53,6 +53,10 @@ private:
 
     void initParticles(bool bRandomVelocity = false);
 
+    void updateParticles();
+
+    void updateSticks();
+
 };
 
 

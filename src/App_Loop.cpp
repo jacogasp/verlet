@@ -4,17 +4,27 @@
 
 #include "Verlet/App.h"
 
-void App::onLoop() {
-
+void App::updateParticles() {
     if (m_particles.empty()) return;
 
-    for (auto it = m_particles.begin(); it != m_particles.end(); ++it) {
-        if (it->getElapsedTime().asSeconds() < 5.0f) {
-            it->loop();
-            it->bounce(m_window);
-        } else {
-            m_particles.erase(it--);
-        }
+    for (auto &p : m_particles) {
+        if (p.isConstraint()) continue;
+        p.loop();
+//        p.bounce(m_window);
     }
+}
 
+void App::updateSticks() {
+    if (m_sticks.empty()) return;
+
+    for (auto &s : m_sticks) {
+        s.updateStick();
+    }
+}
+
+void App::onLoop() {
+    updateParticles();
+    for (int i = 0; i < Simulation::NUM_OF_ITERATIONS; ++i) {
+        updateSticks();
+    }
 }
