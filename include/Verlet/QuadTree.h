@@ -53,7 +53,7 @@ public:
 
 class QuadTree : public QuadTreeNode {
 public:
-    explicit QuadTree(const BoundingBox &boundingBox) : QuadTreeNode(boundingBox) {};
+   using QuadTreeNode::QuadTreeNode;
 };
 
 
