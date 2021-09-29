@@ -22,9 +22,9 @@ void QuadTreeNode::subdivide() {
     float width = (m_boundingBox.x1 - m_boundingBox.x0) * .5f;
     float height = (m_boundingBox.y1 - m_boundingBox.y0) * .5f;
 
-    BoundingBox nw{ m_boundingBox.x0, m_boundingBox.y0, width, height };
-    BoundingBox ne{ xMid, m_boundingBox.y0, xMid + width, height };
-    BoundingBox sw{ m_boundingBox.x0, yMid, width, yMid + height };
+    BoundingBox nw{ m_boundingBox.x0, m_boundingBox.y0, m_boundingBox.x0 + width, m_boundingBox.y0 + height };
+    BoundingBox ne{ xMid, m_boundingBox.y0, xMid + width, m_boundingBox.y0 + height };
+    BoundingBox sw{ m_boundingBox.x0, yMid, m_boundingBox.x0 + width, yMid + height };
     BoundingBox se{ xMid, yMid, xMid + width, yMid + height };
 
     northEast = std::make_unique<QuadTreeNode>(ne);
@@ -36,8 +36,7 @@ void QuadTreeNode::subdivide() {
 
 bool QuadTreeNode::insert(const std::shared_ptr<QuadTreeDataPoint>& data) {
 
-
-    // Ignore objects that do not belong in this quad tree
+    // Ignore objects that do not belong to this node
     if (!m_boundingBox.contains(*data))
         return false;
 
@@ -66,7 +65,6 @@ bool QuadTreeNode::insert(const std::shared_ptr<QuadTreeDataPoint>& data) {
 
 
 void QuadTreeNode::query(const BoundingBox &box, std::vector<std::shared_ptr<QuadTreeDataPoint>> &result) {
-    std::vector<QuadTreeDataPoint> elementsFound{};
 
     // Automatically abort if the range does not intersect this quad
     if (!m_boundingBox.intersects(box))
@@ -82,10 +80,8 @@ void QuadTreeNode::query(const BoundingBox &box, std::vector<std::shared_ptr<Qua
         return;
 
     // Otherwise, add the points from the children
-
     northWest->query(box, result);
     northEast->query(box, result);
     southWest->query(box, result);
     southEast->query(box, result);
-
 }
