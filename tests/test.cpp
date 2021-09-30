@@ -27,7 +27,7 @@ void printPoint(DataPoint &p) {
 int main() {
     BoundingBox<int> bb{ 0.f, 0.f, 100, 100 };
     QuadTree<int> qt{ bb };
-    const int n = 10;
+    const int n = 100;
 
     for (int i = 0; i < n; ++i) {
         DataPoint p;
@@ -40,7 +40,6 @@ int main() {
     std::vector<DataPoint> result;
 
     qt.query(bb, result);
-    std::cout << "Found " << result.size() << " points\n";
 
     for (auto &p : result)
         printPoint(p);
