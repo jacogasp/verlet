@@ -25,25 +25,34 @@ void printPoint(DataPoint &p) {
 }
 
 int main() {
-    BoundingBox<int> bb{ 0.f, 0.f, 100, 100 };
+    BoundingBox bb{ 0.f, 0.f, 100, 100 };
     QuadTree<int> qt{ bb };
     const int n = 100;
 
-    for (int i = 0; i < n; ++i) {
+    std::vector<DataPoint> points;
+    points.resize(n);
+
+    auto generator = []() {
         DataPoint p;
         makeRandomPoint(p);
+        return p;
+    };
+
+    std::generate_n(points.begin(), n, generator);
+
+    for (auto &p : points) {
         printPoint(p);
         qt.insert(p);
     }
+
     std::cout << std::endl;
 
-    std::vector<DataPoint> result;
+    std::vector<DataPoint*> result;
 
     qt.query(bb, result);
 
     for (auto &p : result)
-        printPoint(p);
-
+        printPoint(*p);
 
     std::cout << "\nFound " << result.size() << " points\n";
 
