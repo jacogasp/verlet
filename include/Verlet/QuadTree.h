@@ -13,7 +13,7 @@ template<typename T>
 struct QuadTreeDataPoint {
     float x;
     float y;
-    T data;
+    T *data;
 };
 
 struct BoundingBox {
@@ -72,7 +72,7 @@ public:
     bool insert(QuadTreeDataPoint<T>& data) {
 
         // Ignore objects that do not belong to this node
-        if (!m_boundingBox.contains<T>(data))
+        if (!m_boundingBox.contains(data))
             return false;
 
         // If there is space in this quad tree and if it doesn't have subdivisions, add the object here
@@ -106,7 +106,7 @@ public:
 
         // Check objects at this quad level
         for (auto &el: m_points)
-            if (m_boundingBox.contains<T>(*el))
+            if (m_boundingBox.contains(*el))
                 result.push_back(el);
 
         // If there are no children, terminate here
