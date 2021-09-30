@@ -8,41 +8,45 @@
 #include <memory>
 #include <iostream>
 
-void makeRandomPoint(std::shared_ptr<QuadTreeDataPoint> &point) {
+using DataPoint = QuadTreeDataPoint<int> ;
+
+void makeRandomPoint(DataPoint &point) {
     static auto generator = std::default_random_engine();
     static auto distribution = std::uniform_real_distribution<float>(0, 100);
     static int i = 0;
 
-    point->x = distribution(generator);
-    point->y = distribution(generator);
-    point->data = std::make_shared<int>(i++);
+    point.x = distribution(generator);
+    point.y = distribution(generator);
+    point.data = i++;
 }
 
-void printPoint(QuadTreeDataPoint &p) {
-    auto c = std::static_pointer_cast<int>(p.data);
-    std::cout << "x: " << p.x << ", y: " << p.y << ", data: " << *c << ", data_addr: " << p.data.get() << std::endl;
+void printPoint(DataPoint &p) {
+    std::cout << "x: " << p.x << ", y: " << p.y << ", data: " << p.data << ", data_addr: " << &p.data << std::endl;
 }
 
 int main() {
-    BoundingBox bb{ 0.f, 0.f, 100, 100 };
-    QuadTree qt{ bb };
-    const int n = 100;
+    BoundingBox<int> bb{ 0.f, 0.f, 100, 100 };
+    QuadTree<int> qt{ bb };
+    const int n = 10;
 
     for (int i = 0; i < n; ++i) {
-        auto p = std::make_shared<QuadTreeDataPoint>();
+        DataPoint p;
         makeRandomPoint(p);
-        printPoint(*p);
+        printPoint(p);
         qt.insert(p);
     }
     std::cout << std::endl;
 
-    std::vector<std::shared_ptr<QuadTreeDataPoint>> result;
+    std::vector<DataPoint> result;
 
     qt.query(bb, result);
     std::cout << "Found " << result.size() << " points\n";
 
     for (auto &p : result)
-        printPoint(*p);
+        printPoint(p);
+
+
+    std::cout << "\nFound " << result.size() << " points\n";
 
     return 0;
 }
