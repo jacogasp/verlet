@@ -7,6 +7,7 @@
 #include <random>
 #include <memory>
 #include <iostream>
+#include <algorithm>
 
 using DataPoint = QuadTreeDataPoint<int> ;
 
