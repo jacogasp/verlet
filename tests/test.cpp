@@ -17,11 +17,11 @@ void makeRandomPoint(DataPoint &point) {
 
     point.x = distribution(generator);
     point.y = distribution(generator);
-    point.data = i++;
+    point.data = new int (i++);
 }
 
 void printPoint(DataPoint &p) {
-    std::cout << "x: " << p.x << ", y: " << p.y << ", data: " << p.data << ", data_addr: " << &p.data << std::endl;
+    std::cout << "x: " << p.x << ", y: " << p.y << ", data: " << *p.data << ", data_addr: " << &p.data << std::endl;
 }
 
 int main() {
@@ -47,6 +47,7 @@ int main() {
 
     std::cout << std::endl;
 
+    // Test the entire screen
     std::vector<DataPoint*> result;
 
     qt.query(bb, result);
@@ -55,6 +56,26 @@ int main() {
         printPoint(*p);
 
     std::cout << "\nFound " << result.size() << " points\n";
+
+//    for (auto &p : result)
+//        delete p->data;
+
+
+    result.clear();
+
+    // Test only a portion of the screen
+    bb = BoundingBox{0, 0, 10, 10};
+    qt.query(bb, result);
+
+    for (auto &p : result)
+        printPoint(*p);
+
+    std::cout << "\nFound " << result.size() << " points\n";
+
+    for (auto &p : result)
+        delete p->data;
+
+
 
     return 0;
 }
