@@ -23,7 +23,7 @@ struct BoundingBox {
     float y1;
 
     template<typename T>
-    bool contains(QuadTreeDataPoint<T> &data) const {
+    bool contains(const QuadTreeDataPoint<T> &data) const {
         return x0 <= data.x && data.x <= x1 && y0 <= data.y && data.y <= y1;
     }
 
@@ -44,7 +44,7 @@ protected:
 
     BoundingBox m_boundingBox;
     int m_count = 0;
-    std::vector<QuadTreeDataPoint<T>*> m_points;
+    std::vector<QuadTreeDataPoint<T>> m_points;
 
 public:
 
@@ -69,7 +69,7 @@ public:
         southWest = std::make_unique<QuadTreeNode>(sw);
     }
 
-    bool insert(QuadTreeDataPoint<T>& data) {
+    bool insert(const QuadTreeDataPoint<T>& data) {
 
         // Ignore objects that do not belong to this node
         if (!m_boundingBox.contains(data))
@@ -77,7 +77,7 @@ public:
 
         // If there is space in this quad tree and if it doesn't have subdivisions, add the object here
         if (m_count < QT_NODE_CAPACITY && northWest == nullptr) {
-            m_points.push_back(&data);
+            m_points.push_back(data);
             m_count++;
             return true;
         }
@@ -106,8 +106,8 @@ public:
 
         // Check objects at this quad level
         for (auto &el: m_points)
-            if (m_boundingBox.contains(*el))
-                result.push_back(el);
+            if (box.contains(el))
+                result.push_back(&el);
 
         // If there are no children, terminate here
         if (northWest == nullptr)
