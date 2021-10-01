@@ -18,7 +18,8 @@ cd verlet
 mkdir build
 cd build
 # Configure
-cmake ../
+# cmake ../     # Debug
+cmake -DCMAKE_BUILD_TYPE=Release ..
 # Build
 cmake --build . -j4
 ```
