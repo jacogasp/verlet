@@ -15,7 +15,9 @@ Stick::Stick(Particle &p1, Particle &p2) :
 }
 
 void Stick::updateStick() {
-//    if (m_p1.isConstraint() || m_p2.isConstraint()) return;
+
+    if (!m_isActive) return;
+
     auto v1{ m_p1.getPosition() };
     auto v2{ m_p2.getPosition() };
 
@@ -38,6 +40,14 @@ void Stick::updateStick() {
         m_p2.setPosition(v2);
 
     updateVertices();
+}
+
+bool Stick::isActive() const {
+    return m_isActive;
+}
+
+void Stick::deactivate() {
+    m_isActive = false;
 }
 
 void Stick::updateVertices() {

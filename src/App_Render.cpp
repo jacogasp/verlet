@@ -9,8 +9,16 @@ void App::onRender() {
 
     for (auto &p : m_particles)
         m_window.draw(p);
-    for (auto &s : m_sticks)
-        m_window.draw(s);
+
+    std::vector<QuadTreeDataPoint<Stick>*> sticks;
+    m_quadTree.query(boundingBox, sticks);
+
+
+    for (auto &s : sticks) {
+        auto _s = s->data;
+        if (!_s->isActive()) continue;
+        m_window.draw(*_s);
+    }
 
     m_window.display();
 }

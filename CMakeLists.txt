@@ -15,8 +15,7 @@ add_executable(
         src/Particle.cpp
         src/Stick.cpp
         src/VectorMath.cpp
-        include/Verlet/QuadTree.h include/Verlet/Bounds.h
-        src/QuadTree.cpp)
+)
 include_directories(Verlet ./include/)
 target_link_libraries(Verlet sfml-graphics sfml-audio)
 

@@ -17,14 +17,22 @@ void App::updateParticles() {
 void App::updateSticks() {
     if (m_sticks.empty()) return;
 
-    for (auto &s : m_sticks) {
-        s.updateStick();
+    for (int i = 0; i < Simulation::NUM_OF_ITERATIONS; ++i) {
+        for (auto &s: m_sticks) {
+            s.updateStick();
+        }
     }
+}
+
+void App::updateQuadTree() {
+    // Recreate quadTree from scratch
+    m_quadTree = QuadTree<Stick>(boundingBox);
+    for (auto &s : m_sticks)
+        addStickToQuadTree(s);
 }
 
 void App::onLoop() {
     updateParticles();
-    for (int i = 0; i < Simulation::NUM_OF_ITERATIONS; ++i) {
-        updateSticks();
-    }
+    updateSticks();
+    updateQuadTree();
 }

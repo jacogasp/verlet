@@ -11,6 +11,8 @@
 #include "Verlet/VectorMath.h"
 #include "Verlet/Particle.h"
 
+class App;
+
 class Stick : public sf::Drawable, public sf::Transformable {
 
 private:
@@ -20,10 +22,18 @@ private:
     sf::VertexArray m_vertices{ sf::Quads, 4};
     float thickness = 2.0f;
 
+    bool m_isActive = true;
+
 public:
     Stick(Particle &p1, Particle &p2);
 
     void updateStick();
+
+    friend class App;
+
+    bool isActive() const;
+
+    void deactivate();
 
 private:
     void updateVertices();

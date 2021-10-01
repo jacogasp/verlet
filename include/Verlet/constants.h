@@ -10,6 +10,7 @@ namespace Physics {
     constexpr float bounce = 0.99f;         // 1 = rigid body
     constexpr float maxInitialVelocity = 42.0f;
     constexpr int randomSeed = 666;
+    constexpr float wind = 0.1f;
 }
 
 

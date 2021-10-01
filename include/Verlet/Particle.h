@@ -31,9 +31,9 @@ public:
 
     void init();
 
-    ~Particle() override {
-        std::cout << "Destroy!\n";
-    }
+//    ~Particle() override {
+//        std::cout << "Destroy!\n";
+//    }
 
     void setInitialVelocity(const sf::Vector2f &v);
 

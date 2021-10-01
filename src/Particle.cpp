@@ -27,6 +27,7 @@ void Particle::loop() {
     m_oldPos = sf::Vector2f{ getPosition() };
 
     m_velocity.y += Physics::gravity;
+//    m_velocity.x += Physics::wind;
 
     move(m_velocity);
 }

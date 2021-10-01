@@ -7,6 +7,15 @@
 #include "Verlet/App.h"
 
 
+void App::addStickToQuadTree(Stick &stick) {
+
+    auto pos = (stick.m_p1.getPosition() + stick.m_p2.getPosition()) * 0.5f;
+
+    QuadTreeDataPoint<Stick> data { pos.x, pos.y, &stick };
+    m_quadTree.insert(data);
+}
+
+
 void App::initParticles(bool bRandomVelocity) {
     std::default_random_engine generator;
     generator.seed(Physics::randomSeed);
@@ -41,6 +50,7 @@ void App::initParticles(bool bRandomVelocity) {
     // Create sticks
     for (int r = 0; r < nRows; r++) {
         for (int c = 0; c < nCols; c++) {
+
             // Horizontal
             if (c < nCols - 1)
                 m_sticks.emplace_back(m_particles[c + nCols * r],m_particles[c + nCols * r + 1]);
@@ -51,6 +61,8 @@ void App::initParticles(bool bRandomVelocity) {
     }
 
 
+    for (auto &s : m_sticks)
+        addStickToQuadTree(s);
 }
 
 
