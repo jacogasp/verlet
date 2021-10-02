@@ -21,7 +21,7 @@ void App::onEvent() {
             if (m_event.key.code == sf::Keyboard::Key::R)
                 reset();
         }
-        break;
+            break;
 
         default:;
     }
@@ -29,8 +29,11 @@ void App::onEvent() {
 
 void App::cut(const sf::Vector2i &mousePos) {
 
-    float boxSize = 10.f;
-    BoundingBox bb{ mousePos.x - boxSize, mousePos.y - boxSize, mousePos.x + boxSize, mousePos.y + boxSize };
+    BoundingBox bb{ mousePos.x - Physics::cutSize,
+                    mousePos.y - Physics::cutSize,
+                    mousePos.x + Physics::cutSize,
+                    mousePos.y + Physics::cutSize
+    };
 
     std::vector<QuadTreeDataPoint<Stick> *> result;
     m_quadTree.query(bb, result);

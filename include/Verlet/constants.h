@@ -11,19 +11,20 @@ namespace Physics {
     constexpr float maxInitialVelocity = 42.0f;
     constexpr int randomSeed = 666;
     constexpr float wind = 0.0f;
+    constexpr float cutSize = 10.0f;
 }
 
 
 namespace Resolution {
-    constexpr int WIDTH = 1024;
-    constexpr int HEIGHT = 800;
+    constexpr int WIDTH = 1080;
+    constexpr int HEIGHT = 1080;
     constexpr int PADDING = 5;
     constexpr int GRID_SPACING = 20;
 }
 
 namespace Simulation {
-    constexpr int NUM_OF_PARTICLES = 1024;
-    constexpr int NUM_OF_ITERATIONS = 5;
+    constexpr int NUM_OF_PARTICLES = 2025;
+    constexpr int NUM_OF_ITERATIONS = 30;
 }
 
 #endif //VERLET_CONSTANTS_H

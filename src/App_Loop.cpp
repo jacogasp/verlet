@@ -9,6 +9,7 @@ void App::updateParticles() {
 
     for (auto &p : m_particles) {
         if (p.isConstraint()) continue;
+        if (p.getPosition().y > Resolution::HEIGHT + 30.f) continue;
         p.loop();
 //        p.bounce(m_window);
     }
@@ -19,6 +20,9 @@ void App::updateSticks() {
 
     for (int i = 0; i < Simulation::NUM_OF_ITERATIONS; ++i) {
         for (auto &s: m_sticks) {
+            if (s.m_p1.getPosition().y > Resolution::HEIGHT + 30.f && s.m_p2.getPosition().y > Resolution::HEIGHT + 30.f)
+                continue;
+
             s.updateStick();
         }
     }
