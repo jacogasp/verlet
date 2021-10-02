@@ -33,7 +33,9 @@ private:
 public:
 
     App() : m_window(sf::VideoMode(Resolution::WIDTH, Resolution::HEIGHT), "Window"),
-            m_quadTree{ m_boundingBox } {};
+            m_quadTree{ m_boundingBox } {
+        m_window.setTitle("Verlet Simulation");
+    };
 
 public:
 
