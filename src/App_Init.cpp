@@ -28,8 +28,9 @@ void App::initParticles(bool bRandomVelocity) {
     auto offsetX = 0.5f * (getWidth() - Resolution::GRID_SPACING * nCols -  2.0f * Resolution::PADDING);
     auto offsetY = 0.5f * (getHeight() - Resolution::GRID_SPACING * nRows -  2.0f * Resolution::PADDING);
 
+    int i = 0;
+
     for (auto &p : m_particles) {
-        static int i = 0;
         auto x = (i % nCols) * Resolution::GRID_SPACING + offsetX;
         auto y = (i++ / nRows) * Resolution::GRID_SPACING + offsetY;
 
@@ -60,7 +61,7 @@ void App::initParticles(bool bRandomVelocity) {
         }
     }
 
-
+    // QuadTree
     for (auto &s : m_sticks)
         addStickToQuadTree(s);
 }
@@ -72,6 +73,15 @@ bool App::onInit() {
     initParticles(false);
 
     return true;
+}
+
+void App::reset() {
+    std::cout << "Reset" << std::endl;
+    m_window.clear();
+    m_particles = std::vector<Particle>();
+    m_sticks = std::vector<Stick>();
+    m_quadTree = QuadTree<Stick>(m_boundingBox);
+    onInit();
 }
 
 

@@ -14,11 +14,12 @@
 #include "QuadTree.h"
 #include "Particle.h"
 #include "Stick.h"
+#include "GUI.h"
 
 class App {
 
 private:
-    BoundingBox boundingBox{ 0.0f, 0.0f, Resolution::WIDTH, Resolution::HEIGHT };
+    BoundingBox m_boundingBox{ 0.0f, 0.0f, Resolution::WIDTH, Resolution::HEIGHT };
 
     sf::Event m_event{};
     sf::RenderWindow m_window;
@@ -27,10 +28,12 @@ private:
     std::vector<Stick> m_sticks;
     QuadTree<Stick> m_quadTree;
 
+    GUI m_gui{};
+
 public:
 
     App() : m_window(sf::VideoMode(Resolution::WIDTH, Resolution::HEIGHT), "Window"),
-            m_quadTree{ boundingBox } {};
+            m_quadTree{ m_boundingBox } {};
 
 public:
 
@@ -65,6 +68,8 @@ private:
     void updateSticks();
 
     void updateQuadTree();
+
+    void reset();
 
     // Events
 private:

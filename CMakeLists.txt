@@ -15,6 +15,7 @@ add_executable(
         src/Particle.cpp
         src/Stick.cpp
         src/VectorMath.cpp
+        src/GUI.cpp
 )
 include_directories(Verlet ./include/)
 target_link_libraries(Verlet sfml-graphics sfml-audio)

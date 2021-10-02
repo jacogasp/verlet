@@ -11,7 +11,7 @@ void App::onRender() {
         m_window.draw(p);
 
     std::vector<QuadTreeDataPoint<Stick>*> sticks;
-    m_quadTree.query(boundingBox, sticks);
+    m_quadTree.query(m_boundingBox, sticks);
 
 
     for (auto &s : sticks) {
@@ -19,6 +19,8 @@ void App::onRender() {
         if (!_s->isActive()) continue;
         m_window.draw(*_s);
     }
+
+    m_window.draw(m_gui);
 
     m_window.display();
 }

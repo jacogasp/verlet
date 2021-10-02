@@ -26,7 +26,7 @@ void App::updateSticks() {
 
 void App::updateQuadTree() {
     // Recreate quadTree from scratch
-    m_quadTree = QuadTree<Stick>(boundingBox);
+    m_quadTree = QuadTree<Stick>(m_boundingBox);
     for (auto &s : m_sticks)
         addStickToQuadTree(s);
 }

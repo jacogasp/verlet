@@ -17,6 +17,12 @@ void App::onEvent() {
         }
             break;
 
+        case sf::Event::KeyPressed: {
+            if (m_event.key.code == sf::Keyboard::Key::R)
+                reset();
+        }
+        break;
+
         default:;
     }
 }
