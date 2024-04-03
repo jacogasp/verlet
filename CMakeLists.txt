@@ -3,6 +3,9 @@ project(Verlet)
 
 set(CMAKE_CXX_STANDARD 14)
 
+include(cmake/CPM.cmake)
+CPMAddPackage("gh:sfml/sfml#2.6.1")
+
 find_package(SFML COMPONENTS graphics window system REQUIRED)
 add_executable(
         Verlet main.cpp
@@ -18,6 +21,6 @@ add_executable(
         src/GUI.cpp
 )
 include_directories(Verlet ./include/)
-target_link_libraries(Verlet sfml-graphics sfml-audio)
+target_link_libraries(Verlet sfml-graphics)
 
 add_subdirectory(tests)
