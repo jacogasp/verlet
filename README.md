@@ -1,29 +1,23 @@
 # Verlet Simulation
 
-## Requirements
-In order to compile you need CMake and SFML 2.5 or greater
+Cloth simulation with [Verlet integration](https://en.wikipedia.org/wiki/Verlet_integration),
+built in C++ and SFML.
 
-```bash
-# Mac
-brew install cmake sfml
-
-# Ubuntu
-sudo apt install cmake sfml
-```
+![img](assets/screenshot.png)
 
 ## Build and Run
 
 ```bash
-cd verlet
-mkdir build
-cd build
-# Configure
-# cmake ../     # Debug
-cmake -DCMAKE_BUILD_TYPE=Release ..
-# Build
-cmake --build . -j4
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build
 ```
 
 ```bash
+cd build
 ./Verlet
 ```
+
+## Commands
+
+- Left-Click to cut
+- Press 'R' to reset
